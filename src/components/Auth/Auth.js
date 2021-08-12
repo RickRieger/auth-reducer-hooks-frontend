@@ -11,6 +11,7 @@ import {
 import MuiAlert from '@material-ui/lab/Alert';
 import useChangeInputConfig from '../hooks/useInput';
 import useFetchAPI from '../hooks/useFetchAPI';
+import CheckAuthCookie from '../hooks/checkAuthCookie';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,6 +29,8 @@ function Auth(props) {
   let isLoginRoute = props.match.path === '/login';
   let buttonTitle = isLoginRoute ? 'Login' : 'Sign up';
   let apiURL = isLoginRoute ? '/users/login' : '/users/create-user';
+
+  const { checkIfCookieExists } = CheckAuthCookie();
 
   const [
     { isLoading, response, error, setResponse },
@@ -121,6 +124,9 @@ function Auth(props) {
     clearUsernameInput();
     clearPasswordInput();
     setResponse(null);
+  }
+  if (checkIfCookieExists()) {
+    props.history.push('/protected');
   }
   return (
     <Grid container spacing={0} justifyContent='center'>

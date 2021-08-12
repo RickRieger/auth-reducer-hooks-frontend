@@ -49,7 +49,6 @@ function useFetchAPI(url) {
 
     try {
       let response = await axios(baseURL + url, requestOptionObj);
-      console.log(response);
 
       if (response.data.message === 'user created') {
         setResponse(response.data.message);
@@ -68,7 +67,7 @@ function useFetchAPI(url) {
       }
     } catch (e) {
       console.log(e);
-      setError(e.response.data.message);
+      // setError(e.response.data.message);
       setIsLoading(false);
       handleMessageOpen();
     }
